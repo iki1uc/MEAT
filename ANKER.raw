@@ -1,1 +1,7 @@
-const raw = await fetch("ANKER.raw").then(r => r.text()).catch(() => "");
+let raw = "";
+try {
+    const r = await fetch("ANKER.raw");
+    raw = r.ok ? await r.text() : "Keine Achsen gefunden";
+} catch {
+    raw = "Keine Achsen gefunden";
+}
