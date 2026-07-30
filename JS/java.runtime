@@ -54,3 +54,9 @@ export async function JAVA_RUNTIME_FULL() {
         timestamp: Date.now()
     };
 }
+import { MEAT_METRIC } from "./regel.js";
+
+const metric = MEAT_METRIC(meat);
+metric,
+document.getElementById("meat-panel").innerText =
+    JSON.stringify(root.metric, null, 2);
