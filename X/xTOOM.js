@@ -1,38 +1,45 @@
-// MEAT.js
-import { XTOM_12 } from "./regel.js";
+// X/xTOOM.js
 
-export function MEAT() {
+export function XTOOM() {
 
-    const xtom = XTOM_12();
+    // Die 12 XTOM-Werte
+    const pool12 = [
+        "pulse",
+        "ion",
+        "mia",
+        "echo",
+        "fusion",
+        "resonance",
+        "warp",
+        "charge",
+        "amplitude",
+        "origin",
+        "arcState",
+        "sequence"
+    ];
+
+    // Aufteilen in 6 Stationen mit je 2 Werten
+    const stations6 = [
+        pool12.slice(0, 2),
+        pool12.slice(2, 4),
+        pool12.slice(4, 6),
+        pool12.slice(6, 8),
+        pool12.slice(8, 10),
+        pool12.slice(10, 12)
+    ];
+
+    // Jede Station bekommt 3 Achsen, die 360° erfüllen
+    const axes3 = ["SYN", "VEC", "FLX"];
 
     return {
-        mode: "MEAT",
-        start: {
-            pulse: 1,
-            ion: {},
-            mia: {},
-            echo: {}
-        },
-        options: {
-            SYN: {
-                fusion: xtom.includes("fusion") ? 1 : 0,
-                resonance: xtom.includes("resonance") ? 1 : 0
-            },
-            VEC: {
-                pulse: xtom.includes("pulse") ? 1 : 0,
-                warp: xtom.includes("warp") ? 1 : 0,
-                charge: xtom.includes("charge") ? 1 : 0
-            },
-            FLX: {
-                amplitude: xtom.includes("amplitude") ? 1 : 0,
-                origin: xtom.includes("origin") ? 1 : 0,
-                resonance: xtom.includes("resonance") ? 1 : 0
-            },
-            ARC: {
-                arcState: xtom.includes("arcState") ? 1 : 0
-            }
-        },
-        sequence: xtom,
-        timestamp: Date.now()
+        mode: "XTOM",
+        pool12,
+        stations6,
+        axes3,
+        fullCircle: "360°",
+        fullPercent: "100%",
+        message:
+            "Hier sind die 12 XTOM-Werte, verteilt auf 6 Stationen. " +
+            "Jede Station erfüllt 3 Achsen vollständig (360° / 100%)."
     };
 }
