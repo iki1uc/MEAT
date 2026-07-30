@@ -5,4 +5,3 @@ try {
 } catch {
     raw = "Keine Achsen gefunden";
 }
-sync = const raw = "SYN\nVEC\nFLX\nARC\nTEAM\nANKER";
