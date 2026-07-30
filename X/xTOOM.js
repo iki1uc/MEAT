@@ -17,7 +17,29 @@ export function XTOOM() {
         "arcState",
         "sequence"
     ];
+pulse
 
+ion
+
+mia
+
+echo
+
+fusion
+
+resonance
+
+warp
+
+charge
+
+amplitude
+
+origin
+
+arcState
+
+sequence
     // Aufteilen in 6 Stationen mit je 2 Werten
     const stations6 = [
         pool12.slice(0, 2),
