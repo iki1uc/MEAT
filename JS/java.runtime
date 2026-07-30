@@ -1,4 +1,4 @@
-// JS/java.runtime
+// JS/java.runtime — FINAL FIX
 
 import { GEN_81 } from "./81g.js";
 import { SCORE_81 } from "./81s.js";
@@ -13,29 +13,23 @@ import { MEAT_WAY, MEAT_SCORE } from "./regel.js";
 export async function JAVA_RUNTIME_FULL() {
 
     /* -------------------------------
-       1) 81‑System
+       1) MEAT-SYSTEM
+    --------------------------------*/
+    const meat = MEAT();
+    const meatWay = MEAT_WAY(meat);
+    const meatScore = MEAT_SCORE(meat);
+
+    /* -------------------------------
+       2) 81‑System
     --------------------------------*/
     const combos = GEN_81();
     const scores81 = SCORE_81({ combos });
     const best81 = WAY_81({ combos });
 
     /* -------------------------------
-       2) 12‑Layer‑System + RDY
+       3) 12‑Layer‑System + RDY
     --------------------------------*/
     const multi = await MULTILAYER();
-
-    /* -------------------------------
-       3) MEAT‑System
-    --------------------------------*/
-    const meat = MEAT({
-        pulse: 0,
-        ion: {},
-        mia: {},
-        echo: {}
-    });
-
-    const meatWay = MEAT_WAY(meat);
-    const meatScore = MEAT_SCORE(meat);
 
     /* -------------------------------
        4) 6‑Optionen aus MULTILAYER
@@ -60,6 +54,3 @@ export async function JAVA_RUNTIME_FULL() {
         timestamp: Date.now()
     };
 }
-const meat = MEAT();
-const meatWay = MEAT_WAY(meat);
-const meatScore = MEAT_SCORE(meat);
