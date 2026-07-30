@@ -6,20 +6,27 @@ import { WAY_81 } from "./81w.js";
 
 import { MULTILAYER } from "./multilayer.js";
 import { verteiler } from "./verteiler.js";
+
 import { MEAT } from "../MEAT.js";
 import { MEAT_WAY, MEAT_SCORE } from "./regel.js";
 
-export async function JAVA_RUNTIME() {
+export async function JAVA_RUNTIME_FULL() {
 
-    // 1) 81‑Matrix erzeugen
+    /* -------------------------------
+       1) 81‑System
+    --------------------------------*/
     const combos = GEN_81();
     const scores81 = SCORE_81({ combos });
     const best81 = WAY_81({ combos });
 
-    // 2) 12‑Layer + RDY laden
+    /* -------------------------------
+       2) 12‑Layer‑System + RDY
+    --------------------------------*/
     const multi = await MULTILAYER();
 
-    // 3) MEAT‑System laden
+    /* -------------------------------
+       3) MEAT‑System
+    --------------------------------*/
     const meat = MEAT({
         pulse: 0,
         ion: {},
@@ -27,18 +34,21 @@ export async function JAVA_RUNTIME() {
         echo: {}
     });
 
-    // 4) MEAT‑Wegweiser
     const meatWay = MEAT_WAY(meat);
     const meatScore = MEAT_SCORE(meat);
 
-    // 5) 6‑Optionen verteilen
+    /* -------------------------------
+       4) 6‑Optionen aus MULTILAYER
+    --------------------------------*/
     const options = verteiler(
         multi.layers[multi.way.bestDir].raw
     );
 
-    // 6) Root‑Baum zurückgeben
+    /* -------------------------------
+       5) Root‑Baum zurückgeben
+    --------------------------------*/
     return {
-        mode: "java.runtime",
+        mode: "root",
         combos,
         scores81,
         best81,
