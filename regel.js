@@ -1,5 +1,6 @@
-// regel.js — MEAT_WAY REPAIR
-
+/* -----------------------------------------
+   MEAT_WAY — Wegweiser
+----------------------------------------- */
 export function MEAT_WAY(meat) {
 
     const score =
@@ -13,8 +14,9 @@ export function MEAT_WAY(meat) {
     };
 }
 
-// regel.js — MEAT_SCORE REPAIR
-
+/* -----------------------------------------
+   MEAT_SCORE — Grundmessung
+----------------------------------------- */
 export function MEAT_SCORE(meat) {
     return {
         pulse: meat.start.pulse,
@@ -23,8 +25,9 @@ export function MEAT_SCORE(meat) {
     };
 }
 
-// MEAT.js — ARC PANEL
-
+/* -----------------------------------------
+   ARC_MEAT_PANEL — Dashboard‑Panel
+----------------------------------------- */
 export function ARC_MEAT_PANEL(meat) {
     return {
         mode: meat.mode,
@@ -34,3 +37,27 @@ export function ARC_MEAT_PANEL(meat) {
         timestamp: meat.timestamp
     };
 }
+
+/* -----------------------------------------
+   MEAT_METRIC — erweiterte Messung
+----------------------------------------- */
+export function MEAT_METRIC(meat) {
+
+    return {
+        pulse: meat.start.pulse,
+        ionCount: Object.keys(meat.start.ion).length,
+        miaCount: Object.keys(meat.start.mia).length,
+        echoCount: Object.keys(meat.start.echo).length,
+
+        synPower:
+            (meat.options.SYN.fusion ?? 0) +
+            (meat.options.SYN.resonance ?? 0),
+
+        vecPower:
+            (meat.options.VEC.pulse ?? 0) +
+            (meat.options.VEC.warp ?? 0) +
+            (meat.options.VEC.charge ?? 0),
+
+        flxPower:
+            (meat.options.FLX.amplitude ?? 0) +
+            (meat.options.FLX.res
