@@ -110,13 +110,16 @@ import { JAVA_RUNTIME_FULL } from "./JS/java.runtime";
 <script>
 (async function () {
 
+    
     /* -------------------------------
-       ANKER DATEN LADEN
-    --------------------------------*/
-    const anker = await fetch("ANKER.json").then(r => r.json()).catch(() => null);
-    const raw = await fetch("ANKER.raw").then(r => r.text()).catch(() => "");
+   ANKER DATEN LADEN
+--------------------------------*/
+const anker = await fetch("ANKER.json").then(r => r.json()).catch(() => null);
 
-    document.getElementById("axis-list").innerText = raw || "Keine Achsen gefunden";
+// ACHSEN FIX — KEIN 404 MEHR
+const raw = "SYN\nVEC\nFLX\nARC\nTEAM\nANKER";
+
+document.getElementById("axis-list").innerText = raw;
 
     /* -------------------------------
        AXI ENGINE
