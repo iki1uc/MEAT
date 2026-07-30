@@ -1,85 +1,10 @@
-export function SCORE_81(runtime){
-
-    const scores = [];
-
-    for(const combo of runtime.combos){
-
-        const s =
-            combo.X   * 10 +
-            combo.Q   * 20 +
-            combo.TMP * 30 +
-            combo.RDY * 40;
-
-        scores.push({ combo, score: s });
-    }
-
-    return scores;
-}
-
-    return {
-        SYN: values[0] ?? null,
-        VEC: values[1] ?? null,
-        FLX: values[2] ?? null,
-        ARC: values[3] ?? null,
-        TEAM: values[4] ?? null,
-        ANKER: values[5] ?? null
- 
-export function ARC_MEAT_PANEL(meat){
-    return {
-        mode: meat.mode,
-        dirs: meat.dirs,
-        map: meat.map,
-        way: MEAT_WAY(meat),
-        options: MEAT_OPTIONS(meat),
-        timestamp: meat.timestamp
-0, 1, 2
-
-export function GEN_81(){
-
-    const states = [0,1,2];
-    const combos = [];
-
-    for(const X of states){
-        for(const Q of states){
-            for(const TMP of states){
-                for(const RDY of states){
-                    combos.push({ X, Q, TMP, RDY });
-                }
-            }
-        }
-    }
-
-    return combos; // 81 Kombinationen
-}
-
-export function WAY_81(runtime){
-
-    const scores = SCORE_81(runtime);
-
-    let best = null;
-    let bestScore = -Infinity;
-
-    for(const s of scores){
-        if(s.score > bestScore){
-            bestScore = s.score;
-            best = s.combo;
-        }
-    }
-
-    return {
-        bestCombo: best,
-        bestScore
-    };
-}
 import { GEN_81 } from "./81.js";
 
-export async function JAVA_RUNTIME(){
-
-    const combos = GEN_81();
+export async function JAVA_RUNTIME() {
 
     return {
         mode: "java.runtime",
-        combos,
+        combos: GEN_81(),
         timestamp: Date.now()
     };
 }
