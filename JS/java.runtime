@@ -1,1 +1,99 @@
+const MEAT_MAP = {
+    W: "West",
+    S: "Süd",
+    A: "Alpha",
+    D: "Delta",
+    Q: "Quadrant",
+    E: "East",
+    Y: "Y-Achse",
+    C: "Curve",
+    I: "Inner",
+    X: "X-Achse",
+    O: "Outer",
+    H: "Höhe"
+};
+export async function MEAT() {
+
+    const dirs = ["W","S","A","D","Q","E","Y","C","I","X","O","H"];
+    const data = {};
+
+    for(const d of dirs){
+        const txt = await fetch(`./${d}/meat.csv`).then(r => r.text());
+        const lines = txt.split("\n").map(x => x.trim()).filter(Boolean);
+        data[d] = lines;
+    }
+
+    return {
+        mode: "meat",
+        dirs,
+        map: MEAT_MAP,
+        data,
+        timestamp: Date.now()
+    };
+}
+export function MEAT_SCORE(meat){
+
+    const score = {};
+
+    for(const d of meat.dirs){
+
+        const values = meat.data[d];
+
+        const count = values.length;
+        const length = values.join("").length;
+        const variance = new Set(values).size;
+
+        const s = (count * 10) +
+                  (length * 0.5) +
+                  (variance * 20);
+
+        score[d] = s;
+    }
+
+    return score;
+}
+export function MEAT_WAY(meat){
+
+    const score = MEAT_SCORE(meat);
+
+    let best = null;
+    let bestScore = -Infinity;
+
+    for(const d in score){
+        if(score[d] > bestScore){
+            bestScore = score[d];
+            best = d;
+        }
+    }
+
+    return {
+        bestDir: best,
+        bestName: meat.map[best],
+        bestScore
+    };
+}
+export function MEAT_OPTIONS(meat){
+
+    const way = MEAT_WAY(meat);
+    const values = meat.data[way.bestDir];
+
+    return {
+        SYN: values[0] ?? null,
+        VEC: values[1] ?? null,
+        FLX: values[2] ?? null,
+        ARC: values[3] ?? null,
+        TEAM: values[4] ?? null,
+        ANKER: values[5] ?? null
+    };
+}
+export function ARC_MEAT_PANEL(meat){
+    return {
+        mode: meat.mode,
+        dirs: meat.dirs,
+        map: meat.map,
+        way: MEAT_WAY(meat),
+        options: MEAT_OPTIONS(meat),
+        timestamp: meat.timestamp
+    };
+}
 
