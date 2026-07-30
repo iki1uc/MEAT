@@ -23,6 +23,15 @@ a { color:#6cf; text-decoration:none; font-weight:bold; }
 <script src="IDkoop.js"></script>
 <script src="IDneutral.js"></script>
 <script src="IDpook.js"></script>
+<script type="module">
+import { JAVA_RUNTIME } from "./JS/java.runtime";
+
+(async () => {
+    const root = await JAVA_RUNTIME();
+    document.getElementById("system-status").innerText =
+        JSON.stringify(root, null, 2);
+})();
+</script>
 
 </head>
 
