@@ -60,3 +60,6 @@ export async function JAVA_RUNTIME_FULL() {
         timestamp: Date.now()
     };
 }
+const meat = MEAT();
+const meatWay = MEAT_WAY(meat);
+const meatScore = MEAT_SCORE(meat);
