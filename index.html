@@ -23,13 +23,26 @@ a { color:#6cf; text-decoration:none; font-weight:bold; }
 <script src="IDkoop.js"></script>
 <script src="IDneutral.js"></script>
 <script src="IDpook.js"></script>
+
+<!-- RUNTIME LOADER -->
 <script type="module">
-import { JAVA_RUNTIME } from "./JS/java.runtime";
+import { JAVA_RUNTIME_FULL } from "./JS/java.runtime";
 
 (async () => {
-    const root = await JAVA_RUNTIME();
-    document.getElementById("system-status").innerText =
+    const root = await JAVA_RUNTIME_FULL();
+
+    document.getElementById("root-baum").innerText =
         JSON.stringify(root, null, 2);
+
+    document.getElementById("rdy-master").innerText =
+        JSON.stringify(root.best81, null, 2);
+
+    document.getElementById("matrix-81").innerText =
+        JSON.stringify(root.scores81.slice(0, 10), null, 2)
+        + "\n...\n(81 Werte)";
+
+    document.getElementById("anker-runtime").innerText =
+        JSON.stringify(root.options, null, 2);
 })();
 </script>
 
@@ -48,9 +61,7 @@ import { JAVA_RUNTIME } from "./JS/java.runtime";
 <!-- IDENTITÄT -->
 <div class="block">
     <div class="title">Identität</div>
-    <p>
-        <a href="id.html">→ ANKER‑Identität öffnen</a>
-    </p>
+    <p><a href="id.html">→ ANKER‑Identität öffnen</a></p>
     <pre id="id-status"></pre>
 </div>
 
@@ -72,6 +83,30 @@ import { JAVA_RUNTIME } from "./JS/java.runtime";
     <pre id="system-status"></pre>
 </div>
 
+<!-- ROOT-BAUM -->
+<div class="block">
+    <div class="title">Root‑Baum</div>
+    <pre id="root-baum"></pre>
+</div>
+
+<!-- RDY-MASTER -->
+<div class="block">
+    <div class="title">RDY‑Master</div>
+    <pre id="rdy-master"></pre>
+</div>
+
+<!-- 81-MATRIX -->
+<div class="block">
+    <div class="title">81‑Matrix</div>
+    <pre id="matrix-81"></pre>
+</div>
+
+<!-- ANKER-RUNTIME -->
+<div class="block">
+    <div class="title">ANKER‑Runtime</div>
+    <pre id="anker-runtime"></pre>
+</div>
+
 <script>
 (async function () {
 
@@ -83,7 +118,6 @@ import { JAVA_RUNTIME } from "./JS/java.runtime";
 
     document.getElementById("axis-list").innerText = raw || "Keine Achsen gefunden";
 
-
     /* -------------------------------
        AXI ENGINE
     --------------------------------*/
@@ -91,14 +125,12 @@ import { JAVA_RUNTIME } from "./JS/java.runtime";
     document.getElementById("axis-status").innerText =
         axi ? "Achsen stabil" : "Achsenfehler";
 
-
     /* -------------------------------
        RESPO ENGINE
     --------------------------------*/
     const respo = RESPO_CORE(anker || {});
     document.getElementById("respo-status").innerText =
         `Score: ${respo.score}\nStatus: ${respo.ok ? "STABIL" : "KRITISCH"}`;
-
 
     /* -------------------------------
        ID MODUS ERKENNEN
@@ -115,7 +147,6 @@ import { JAVA_RUNTIME } from "./JS/java.runtime";
 
     document.getElementById("id-status").innerText =
         `Modus: ${idMode.toUpperCase()}\nInfo: ${idMap[idMode].info()}`;
-
 
     /* -------------------------------
        SYSTEM STATUS
