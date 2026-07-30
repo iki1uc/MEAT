@@ -12,3 +12,13 @@ export function MEAT_WAY(meat) {
         bestScore: score
     };
 }
+
+// regel.js — MEAT_SCORE REPAIR
+
+export function MEAT_SCORE(meat) {
+    return {
+        pulse: meat.start.pulse,
+        ionCount: Object.keys(meat.start.ion).length,
+        echoCount: Object.keys(meat.start.echo).length
+    };
+}
