@@ -22,3 +22,15 @@ export function MEAT_SCORE(meat) {
         echoCount: Object.keys(meat.start.echo).length
     };
 }
+
+// MEAT.js — ARC PANEL
+
+export function ARC_MEAT_PANEL(meat) {
+    return {
+        mode: meat.mode,
+        start: meat.start,
+        options: meat.options,
+        sequence: meat.sequence,
+        timestamp: meat.timestamp
+    };
+}
