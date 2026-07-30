@@ -1,10 +1,52 @@
-import { GEN_81 } from "./81.js";
+// JS/java.runtime
+
+import { GEN_81 } from "./81g.js";
+import { SCORE_81 } from "./81s.js";
+import { WAY_81 } from "./81w.js";
+
+import { MULTILAYER } from "./multilayer.js";
+import { verteiler } from "./verteiler.js";
+import { MEAT } from "../MEAT.js";
+import { MEAT_WAY, MEAT_SCORE } from "./regel.js";
 
 export async function JAVA_RUNTIME() {
 
+    // 1) 81‑Matrix erzeugen
+    const combos = GEN_81();
+    const scores81 = SCORE_81({ combos });
+    const best81 = WAY_81({ combos });
+
+    // 2) 12‑Layer + RDY laden
+    const multi = await MULTILAYER();
+
+    // 3) MEAT‑System laden
+    const meat = MEAT({
+        pulse: 0,
+        ion: {},
+        mia: {},
+        echo: {}
+    });
+
+    // 4) MEAT‑Wegweiser
+    const meatWay = MEAT_WAY(meat);
+    const meatScore = MEAT_SCORE(meat);
+
+    // 5) 6‑Optionen verteilen
+    const options = verteiler(
+        multi.layers[multi.way.bestDir].raw
+    );
+
+    // 6) Root‑Baum zurückgeben
     return {
         mode: "java.runtime",
-        combos: GEN_81(),
+        combos,
+        scores81,
+        best81,
+        multi,
+        meat,
+        meatWay,
+        meatScore,
+        options,
         timestamp: Date.now()
     };
 }
