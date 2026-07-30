@@ -1,52 +1,18 @@
 // TeamEngine.js
-export function TeamEngine(meat, syn, vec, flx) {
-
-    const PQ = {
-        meat,
-        syn,
-        vec,
-        flx,
-        timestamp: Date.now()
-    };
-
-    const PP = {
-        valid: Boolean(vec),
-        strength: vec?.magnitude ?? null,
-        optimized: flx?.flight ?? null
-    };
+export function TeamEngine(runtime, meat) {
 
     return {
         mode: "team",
-        PQ,
-        PP
-    };
-}
-import { MULTILAYER } from "./multilayer.js";
-
-const multi = await MULTILAYER();
-const best = multi.layers[multi.way.bestDir];
-export function TeamEngine(meat, syn, vec, flx){
-
-    const multi = meat.multi; // multilayer system
-
-    return {
-        mode: "team",
-        PQ: { meat, syn, vec, flx, multi },
+        PQ: {
+            runtime,
+            meat,
+            timestamp: Date.now()
+        },
         PP: {
-            valid: Boolean(vec),
-            strength: vec?.magnitude ?? null,
-            optimized: flx?.flight ?? null,
-            direction: multi.way.bestName
+            valid: meat.start.pulse > 0,
+            strength: meat.options.VEC.pulse,
+            optimized: meat.options.FLX.flux,
+            direction: runtime.best81?.bestCombo ?? null
         }
-    };
-}
-export function ARC_MEAT_PANEL(multi){
-    return {
-        mode: multi.mode,
-        dirs: multi.dirs,
-        layers: multi.layers,
-        score: multi.score,
-        way: multi.way,
-        timestamp: multi.timestamp
     };
 }
