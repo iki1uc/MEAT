@@ -1,81 +1,20 @@
-const MEAT_MAP = {
-    W: "West",
-    S: "Süd",
-    A: "Alpha",
-    D: "Delta",
-    Q: "Quadrant",
-    E: "East",
-    Y: "Y-Achse",
-    C: "Curve",
-    I: "Inner",
-    X: "X-Achse",
-    O: "Outer",
-    H: "Höhe"
-};
-export async function MEAT() {
+export function SCORE_81(runtime){
 
-    const dirs = ["W","S","A","D","Q","E","Y","C","I","X","O","H"];
-    const data = {};
+    const scores = [];
 
-    for(const d of dirs){
-        const txt = await fetch(`./${d}/meat.csv`).then(r => r.text());
-        const lines = txt.split("\n").map(x => x.trim()).filter(Boolean);
-        data[d] = lines;
+    for(const combo of runtime.combos){
+
+        const s =
+            combo.X   * 10 +
+            combo.Q   * 20 +
+            combo.TMP * 30 +
+            combo.RDY * 40;
+
+        scores.push({ combo, score: s });
     }
 
-    return {
-        mode: "meat",
-        dirs,
-        map: MEAT_MAP,
-        data,
-        timestamp: Date.now()
-    };
+    return scores;
 }
-export function MEAT_SCORE(meat){
-
-    const score = {};
-
-    for(const d of meat.dirs){
-
-        const values = meat.data[d];
-
-        const count = values.length;
-        const length = values.join("").length;
-        const variance = new Set(values).size;
-
-        const s = (count * 10) +
-                  (length * 0.5) +
-                  (variance * 20);
-
-        score[d] = s;
-    }
-
-    return score;
-}
-export function MEAT_WAY(meat){
-
-    const score = MEAT_SCORE(meat);
-
-    let best = null;
-    let bestScore = -Infinity;
-
-    for(const d in score){
-        if(score[d] > bestScore){
-            bestScore = score[d];
-            best = d;
-        }
-    }
-
-    return {
-        bestDir: best,
-        bestName: meat.map[best],
-        bestScore
-    };
-}
-export function MEAT_OPTIONS(meat){
-
-    const way = MEAT_WAY(meat);
-    const values = meat.data[way.bestDir];
 
     return {
         SYN: values[0] ?? null,
@@ -84,8 +23,7 @@ export function MEAT_OPTIONS(meat){
         ARC: values[3] ?? null,
         TEAM: values[4] ?? null,
         ANKER: values[5] ?? null
-    };
-}
+ 
 export function ARC_MEAT_PANEL(meat){
     return {
         mode: meat.mode,
@@ -94,6 +32,54 @@ export function ARC_MEAT_PANEL(meat){
         way: MEAT_WAY(meat),
         options: MEAT_OPTIONS(meat),
         timestamp: meat.timestamp
-    };
+0, 1, 2
+
+export function GEN_81(){
+
+    const states = [0,1,2];
+    const combos = [];
+
+    for(const X of states){
+        for(const Q of states){
+            for(const TMP of states){
+                for(const RDY of states){
+                    combos.push({ X, Q, TMP, RDY });
+                }
+            }
+        }
+    }
+
+    return combos; // 81 Kombinationen
 }
 
+export function WAY_81(runtime){
+
+    const scores = SCORE_81(runtime);
+
+    let best = null;
+    let bestScore = -Infinity;
+
+    for(const s of scores){
+        if(s.score > bestScore){
+            bestScore = s.score;
+            best = s.combo;
+        }
+    }
+
+    return {
+        bestCombo: best,
+        bestScore
+    };
+}
+import { GEN_81 } from "./81.js";
+
+export async function JAVA_RUNTIME(){
+
+    const combos = GEN_81();
+
+    return {
+        mode: "java.runtime",
+        combos,
+        timestamp: Date.now()
+    };
+}
